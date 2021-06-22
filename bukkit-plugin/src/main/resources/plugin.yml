@@ -1,0 +1,5 @@
+name: DatabaseSystem
+main: de.blu.database.DatabasePlugin
+api-version: 1.16
+version: 1.0.0
+author: Blu

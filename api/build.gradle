@@ -1,0 +1,12 @@
+plugins {
+    id 'java'
+}
+
+group 'de.blu'
+version '1.0.0-SNAPSHOT'
+
+dependencies {
+    compileOnly 'com.datastax.cassandra:cassandra-driver-core:3.2.0'
+    compileOnly 'mysql:mysql-connector-java:8.0.25'
+    compileOnly 'io.lettuce:lettuce-core:5.2.2.RELEASE'
+}

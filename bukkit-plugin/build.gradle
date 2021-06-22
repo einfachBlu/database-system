@@ -1,0 +1,64 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+}
+
+group 'de.blu'
+version '1.0.0-SNAPSHOT'
+
+repositories {
+    // Spigot API
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+
+    // Bungeecord Chat (required by spigot-api)
+    maven { url = 'http://maven.elmakers.com/repository/' }
+
+    // Paper 1.16
+    maven { url = 'https://papermc.io/repo/repository/maven-public/' }
+}
+
+shadowJar {
+    /*
+    relocate 'io.netty', 'shadow.io.netty'
+    relocate 'com.google.guava', 'shadow.com.google.guava'
+    relocate 'com.datastax.cassandra', 'shadow.com.datastax.cassandra'
+    relocate 'io.lettuce', 'shadow.io.lettuce'
+    */
+    relocate 'com.google.gson', 'shadow.com.google.gson'
+}
+
+dependencies {
+    implementation project(":api")
+
+    compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT'
+}
+
+shadowJar.doLast {
+    File jarFile = file("${project.buildDir}/libs/${project.name}-${project.version}-all.jar")
+
+    if (!jarFile.exists()) {
+        jarFile = file("${project.buildDir}/libs/${project.name}-${project.version}.jar")
+        if (!jarFile.exists()) {
+            //println "output jarFile doesnt exist, maybe something failed with the build?"
+            return
+        }
+    }
+
+    copy {
+        from jarFile
+        into "${project.rootDir}/output/"
+
+        rename {
+            "database-${project.name}.jar"
+        }
+    }
+
+    copy {
+        from jarFile
+        into "${project.rootDir}/output/"
+
+        rename {
+            "G:\\Programming\\MC_TestServer\\tuinity_1_16\\plugins\\database-${project.name}.jar"
+        }
+    }
+}
